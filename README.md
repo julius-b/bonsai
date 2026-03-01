@@ -1,3 +1,7 @@
+how to use this fork:
+- depend on version `1.2.1`
+- clone this repo and run `gradle publishToMavenLocal`
+
 [![Maven metadata URL](https://img.shields.io/maven-metadata/v?color=blue&metadataUrl=https://s01.oss.sonatype.org/service/local/repo_groups/public/content/cafe/adriel/bonsai/bonsai-core/maven-metadata.xml&style=for-the-badge)](https://repo.maven.apache.org/maven2/cafe/adriel/bonsai/)
 [![Android API](https://img.shields.io/badge/api-21%2B-brightgreen.svg?style=for-the-badge)](https://android-arsenal.com/api?level=21)
 [![kotlin](https://img.shields.io/github/languages/top/adrielcafe/bonsai.svg?style=for-the-badge&color=blueviolet)](https://kotlinlang.org/)
