@@ -1,12 +1,13 @@
 package cafe.adriel.bonsai.filesystem
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material.icons.outlined.FolderOpen
-import androidx.compose.material.icons.outlined.InsertDriveFile
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
+import bonsai.bonsai_file_system.generated.resources.Res
+import bonsai.bonsai_file_system.generated.resources.draft_24px
+import bonsai.bonsai_file_system.generated.resources.folder_24px
+import bonsai.bonsai_file_system.generated.resources.folder_open_24px
 import cafe.adriel.bonsai.core.BonsaiStyle
 import cafe.adriel.bonsai.core.node.Branch
 import cafe.adriel.bonsai.core.node.BranchNode
@@ -15,18 +16,32 @@ import cafe.adriel.bonsai.core.tree.Tree
 import cafe.adriel.bonsai.core.tree.TreeScope
 import okio.FileSystem
 import okio.Path
+import okio.Path.Companion.toOkioPath
+import org.jetbrains.compose.resources.painterResource
+import java.io.File
 
-public fun FileSystemBonsaiStyle(): BonsaiStyle<Path> =
+@Composable
+fun FileSystemTree(
+    rootPath: File,
+    selfInclude: Boolean = false
+): Tree<Path> =
+    FileSystemTree(
+        rootPath = rootPath.toOkioPath(),
+        fileSystem = FileSystem.SYSTEM,
+        selfInclude = selfInclude
+    )
+
+fun FileSystemBonsaiStyle(): BonsaiStyle<Path> =
     BonsaiStyle(
         nodeNameStartPadding = 4.dp,
         nodeCollapsedIcon = { node ->
-            rememberVectorPainter(
-                if (node is BranchNode) Icons.Outlined.Folder
-                else Icons.Outlined.InsertDriveFile
+            painterResource(
+                if (node is BranchNode) Res.drawable.folder_24px
+                else Res.drawable.draft_24px
             )
         },
         nodeExpandedIcon = {
-            rememberVectorPainter(Icons.Outlined.FolderOpen)
+            painterResource(Res.drawable.folder_open_24px)
         }
     )
 

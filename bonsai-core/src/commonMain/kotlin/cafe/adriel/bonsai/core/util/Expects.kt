@@ -1,3 +1,7 @@
 package cafe.adriel.bonsai.core.util
 
-internal expect val randomUUID: String
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
+
+@OptIn(ExperimentalUuidApi::class)
+internal fun randomUUID(): String = Uuid.random().toString()

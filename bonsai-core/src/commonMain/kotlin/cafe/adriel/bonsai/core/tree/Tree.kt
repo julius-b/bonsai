@@ -2,6 +2,7 @@ package cafe.adriel.bonsai.core.tree
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Composition
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -37,6 +38,11 @@ public fun <T> Tree(
     val applier = remember { TreeApplier<T>() }
     val compositionContext = rememberCompositionContext()
     val composition = remember(applier, compositionContext) { Composition(applier, compositionContext) }
+    DisposableEffect(composition) {
+        onDispose {
+            composition.dispose()
+        }
+    }
     composition.setContent { TreeScope(depth = 0).content() }
     return remember(applier) { Tree(applier.children) }
 }

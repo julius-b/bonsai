@@ -1,24 +1,15 @@
 package cafe.adriel.bonsai.sample.tree
 
 import android.os.Build
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Adb
-import androidx.compose.material.icons.outlined.Android
-import androidx.compose.material.icons.outlined.Description
-import androidx.compose.material.icons.outlined.Folder
-import androidx.compose.material.icons.outlined.FolderOpen
-import androidx.compose.material.icons.outlined.Image
-import androidx.compose.material.icons.outlined.InsertDriveFile
-import androidx.compose.material.icons.outlined.LocalCafe
-import androidx.compose.material.icons.outlined.Memory
-import androidx.compose.material.icons.outlined.Mic
-import androidx.compose.material.icons.outlined.Videocam
+import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import cafe.adriel.bonsai.R
 import cafe.adriel.bonsai.core.Bonsai
 import cafe.adriel.bonsai.core.node.BranchNode
 import cafe.adriel.bonsai.core.tree.Tree
@@ -52,30 +43,34 @@ object FileSystemTreeScreen : TreeScreen<Path> {
                 nodeCollapsedIcon = { node ->
                     getIcon(
                         path = node.content,
-                        default = if (node is BranchNode) Icons.Outlined.Folder
-                        else Icons.Outlined.InsertDriveFile
+                        default = if (node is BranchNode) R.drawable.folder_24px
+                        else R.drawable.draft_24px
                     )
                 },
                 nodeExpandedIcon = { node ->
-                    getIcon(path = node.content, default = Icons.Outlined.FolderOpen)
-                }
+                    getIcon(path = node.content, default = R.drawable.folder_open_24px)
+                },
+                nodeCollapsedIconColorFilter = ColorFilter.tint(Color.Black),
+                nodeExpandedIconColorFilter = ColorFilter.tint(Color.Black)
             ),
-            modifier = modifier
+            modifier = modifier,
+            onDoubleClick = null,
+            onLongClick = null
         )
     }
 
     @Composable
-    private fun getIcon(path: Path, default: ImageVector) =
-        rememberVectorPainter(
+    private fun getIcon(path: Path, @DrawableRes default: Int) =
+        painterResource(
             when (path.toFile().extension) {
-                "apk" -> Icons.Outlined.Android
-                "jar" -> Icons.Outlined.LocalCafe
-                "studio" -> Icons.Outlined.Adb
-                "so" -> Icons.Outlined.Memory
-                "xml" -> Icons.Outlined.Description
-                "png", "webp", "jpg" -> Icons.Outlined.Image
-                "mp4", "webm", "gif" -> Icons.Outlined.Videocam
-                "wav", "mp3", "ogg" -> Icons.Outlined.Mic
+                "apk" -> R.drawable.android_24px
+                "jar" -> R.drawable.local_cafe_24px
+                "studio" -> R.drawable.adb_24px
+                "so" -> R.drawable.memory_24px
+                "xml" -> R.drawable.description_24px
+                "png", "webp", "jpg" -> R.drawable.image_24px
+                "mp4", "webm", "gif" -> R.drawable.videocam_24px
+                "wav", "mp3", "ogg" -> R.drawable.mic_24px
                 else -> default
             }
         )

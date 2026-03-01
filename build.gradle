@@ -10,14 +10,21 @@ buildscript {
     }
 }
 
+plugins {
+    alias(libs.plugins.composeMultiplatform) apply false
+    alias(libs.plugins.kotlinMultiplatform) apply false
+    alias(libs.plugins.composeCompiler) apply false
+    alias(libs.plugins.compose.android) apply false
+}
+
 subprojects {
     apply plugin: 'org.jlleitschuh.gradle.ktlint'
     apply plugin: 'io.gitlab.arturbosch.detekt'
-    plugins.withId("com.vanniktech.maven.publish") {
-        mavenPublish {
-            sonatypeHost = "S01"
-        }
-    }
+    //plugins.withId("com.vanniktech.maven.publish") {
+    //    mavenPublish {
+    //        sonatypeHost = "S01"
+    //    }
+    //}
     detekt {
         config = files("../detekt.yml")
         parallel = true

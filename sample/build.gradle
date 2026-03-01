@@ -1,13 +1,27 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
+    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.compose.android)
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
 }
 
 apply from: "../android-module.gradle"
 
+tasks.withType(KotlinCompile).configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
+
 android {
     defaultConfig {
         applicationId "cafe.adriel.bonsai.sample"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
@@ -17,7 +31,8 @@ dependencies {
     implementation(projects.bonsaiJson)
 
     implementation libs.compose.material
-    implementation libs.compose.material.icons
     implementation libs.compose.activity
     implementation libs.compose.voyager
+    implementation libs.compose.foundation
+    implementation libs.google.material
 }

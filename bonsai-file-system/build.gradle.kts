@@ -1,22 +1,38 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    kotlin("multiplatform")
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.composeCompiler)
     id("com.android.library")
-    id("org.jetbrains.compose")
     id("com.vanniktech.maven.publish")
 }
 
-kotlinMultiplatform()
-
 kotlin {
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
+    jvm()
+
     sourceSets {
-        val commonMain by getting {
+        commonMain {
             dependencies {
                 api(projects.bonsaiCore)
                 api(libs.okio)
-                compileOnly(compose.foundation)
-                compileOnly(compose.ui)
-                compileOnly(compose.materialIconsExtended)
+                compileOnly(libs.compose.foundation)
+                compileOnly(libs.compose.ui)
+                implementation(libs.compose.components.resources)
             }
         }
     }
+}
+
+android {
+    namespace = "cafe.adriel.bonsai.filesystem"
+    compileSdk = 36
 }
